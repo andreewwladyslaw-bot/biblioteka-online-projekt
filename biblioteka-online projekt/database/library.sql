@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Paź 12, 2026 at 12:32 PM
+-- Generation Time: Paź 12, 2026 at 01:34 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -88,6 +88,15 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `full_name`, `username`, `password_hash`, `role`, `created_at`) VALUES
+(1, 'Администратор', 'admin_demo', '$2y$12$ztF2nXehtkMYPP1BlrM9JeVW8xT7bdhvnFtt2kpYUrr80xJZotfpa', 'admin', '2026-10-12 11:29:13'),
+(2, 'Сотрудник 1', 'employee1', '$2y$12$Q08n.ZwmMgNbSs0zDcWoCelKHe2CmQhatX14nS7D3gWOedJ32rY3m', 'employee', '2026-10-12 11:29:13'),
+(3, 'Сотрудник 2', 'employee2', '$2y$12$N.pZR6Www4KZ8oIYLM8ePeGEWbqFzthZKQBuhjNQOBtROgsUJyttG', 'employee', '2026-10-12 11:29:13');
+
+--
 -- Indeksy dla zrzutów tabel
 --
 
@@ -146,7 +155,7 @@ ALTER TABLE `materials`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
