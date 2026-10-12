@@ -1,7 +1,8 @@
+
 <?php
 
 $host = 'localhost';
-$dbname = 'biblioteka_online';
+$dbname = 'biblioteka_online_test';
 $username = 'biblioteka_app';
 $password = 'NoweHaslo123!';
 
@@ -18,6 +19,7 @@ try {
     );
 
 } catch (PDOException $e) {
-    die("Błąd połączenia z bazą danych.");
+    die("Ошибка подключения к базе данных.");
 }
+
 ?>
