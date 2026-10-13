@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Paź 12, 2026 at 01:34 PM
+-- Generation Time: Paź 13, 2026 at 01:43 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -67,10 +67,20 @@ CREATE TABLE `materials` (
   `author` varchar(150) NOT NULL,
   `description` text NOT NULL,
   `category_id` int(11) NOT NULL,
-  `pdf_path` varchar(255) NOT NULL,
   `version` int(11) NOT NULL DEFAULT 1,
-  `is_visible` tinyint(1) NOT NULL DEFAULT 1
+  `is_visible` tinyint(1) NOT NULL DEFAULT 1,
+  `file_path` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `materials`
+--
+
+INSERT INTO `materials` (`id`, `title`, `author`, `description`, `category_id`, `version`, `is_visible`, `file_path`) VALUES
+(1, 'Введение в PHP', 'Учебный отдел', 'Основы языка PHP, переменные, условия и циклы.', 2, 1, 1, 'php_basics.pdf'),
+(2, 'PHP для веб-разработки', 'IT-команда', 'Создание динамических сайтов с помощью PHP.', 2, 1, 1, 'php_web.pdf'),
+(3, 'Руководство по продукту', 'Отдел продукта', 'Инструкция по использованию продукта компании.', 1, 1, 1, 'product_guide.pdf'),
+(4, 'Скрытая инструкция', 'Администратор', 'Черновик, который нельзя показывать сотрудникам.', 3, 1, 0, 'hidden_guide.pdf');
 
 -- --------------------------------------------------------
 
@@ -149,7 +159,7 @@ ALTER TABLE `downloads`
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
