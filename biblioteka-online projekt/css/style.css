@@ -70,3 +70,50 @@ button:disabled {
         align-items: flex-start;
     }
 }
+
+/* День 5 — форма поиска */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+
+    padding: 20px;
+    margin-bottom: 25px;
+
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 220px;
+}
+
+.filter-group label {
+    font-weight: bold;
+}
+
+.filter-group input,
+.filter-group select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.reset-link {
+    padding: 10px;
+    text-decoration: none;
+}
