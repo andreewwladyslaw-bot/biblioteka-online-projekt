@@ -117,3 +117,48 @@ button:disabled {
     padding: 10px;
     text-decoration: none;
 }
+
+/* День 6 — управление категориями */
+
+.category-list {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.category-list .card {
+    padding: 20px;
+}
+
+.category-list form {
+    margin-bottom: 15px;
+}
+
+.category-list input {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.success {
+    color: #166534;
+    background: #dcfce7;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.error {
+    color: #991b1b;
+    background: #fee2e2;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
