@@ -162,3 +162,47 @@ button:disabled {
     background: #94a3b8;
     cursor: not-allowed;
 }
+
+/* День 7 — загрузка PDF */
+
+.material-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 600px;
+    padding: 24px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.material-form label {
+    font-weight: bold;
+}
+
+.material-form input,
+.material-form textarea,
+.material-form select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.material-form button {
+    align-self: flex-start;
+}
+
+.success {
+    color: #166534;
+    background: #dcfce7;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.error {
+    color: #991b1b;
+    background: #fee2e2;
+    padding: 12px;
+    border-radius: 8px;
+}
