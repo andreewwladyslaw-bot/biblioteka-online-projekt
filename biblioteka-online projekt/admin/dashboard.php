@@ -33,6 +33,26 @@ requireAdmin();
             </a>
         </p>
     </nav>
+    
+<h2>Управление материалами</h2>
+
+<p>
+    <a href="add_material.php">
+        Добавить PDF-материал
+    </a>
+</p>
+
+<p>
+    <a href="categories.php">
+        Управление категориями
+    </a>
+</p>
+
+<p>
+    <a href="../index.php">
+        Открыть каталог
+    </a>
+</p>
 
 
     <p>
