@@ -26,7 +26,17 @@ requireAdmin();
             Управление категориями
             </a>
         </p>
+        <p>
+            <a href="add_material.php">
+            Добавить PDF-материал
+            </a>
+        </p>
 
+        <p>
+            <a href="downloads.php">
+            Журнал скачиваний
+            </a>
+        </p>
         <p>
             <a href="../index.php">
             Перейти в каталог

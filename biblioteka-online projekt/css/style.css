@@ -220,3 +220,38 @@ button:disabled {
 .download-button:hover {
     background: #1d4ed8;
 }
+
+/* День 10 — журнал скачиваний */
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.downloads-table th,
+.downloads-table td {
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    text-align: left;
+}
+
+.downloads-table th {
+    background: #e2e8f0;
+    font-weight: bold;
+}
+
+.downloads-table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.downloads-table small {
+    display: block;
+    color: #64748b;
+    margin-top: 4px;
+}
