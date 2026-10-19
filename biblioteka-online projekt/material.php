@@ -85,9 +85,14 @@ if (!$material) {
             <?= nl2br(esc((string) $material['description'])) ?>
         </p>
 
-        <button type="button" disabled>
-            Скачать PDF
-        </button>
+        
+<a
+    href="download.php?id=<?= (int) $material['id'] ?>"
+    class="download-button"
+>
+    Скачать PDF
+</a>
+
 
         <p class="hint">
             Скачивание PDF будет реализовано в F04.
