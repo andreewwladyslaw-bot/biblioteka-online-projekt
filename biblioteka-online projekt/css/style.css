@@ -255,3 +255,71 @@ button:disabled {
     color: #64748b;
     margin-top: 4px;
 }
+
+/* День 12 — фильтрация журнала */
+
+.download-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+
+    padding: 20px;
+    margin-bottom: 24px;
+
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.download-filters > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 200px;
+}
+
+.download-filters label {
+    font-weight: bold;
+}
+
+.download-filters select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.download-filters button {
+    align-self: flex-start;
+}
+
+.download-filters a {
+    padding: 10px 0;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.downloads-table th,
+.downloads-table td {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.downloads-table th {
+    background: #e2e8f0;
+}
+
+.downloads-table small {
+    display: block;
+    color: #64748b;
+}

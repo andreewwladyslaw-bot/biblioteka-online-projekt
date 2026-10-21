@@ -9,9 +9,70 @@ requireAdmin();
 
 require_once __DIR__ . '/../config/database.php';
 
-// Загружаем историю скачиваний
-$stmt = $pdo->query(
-    'SELECT
+// 1. Получаем пользователей
+$users = $pdo->query(
+    'SELECT id, full_name, username
+     FROM users
+     ORDER BY full_name, id'
+)->fetchAll(PDO::FETCH_ASSOC);
+
+// 2. Получаем материалы, включая скрытые
+$materials = $pdo->query(
+    'SELECT id, title
+     FROM materials
+     ORDER BY title, id'
+)->fetchAll(PDO::FETCH_ASSOC);
+
+// 3. Читаем фильтры из адреса страницы
+$userId = null;
+$materialId = null;
+
+$userInput = $_GET['user_id'] ?? '';
+$materialInput = $_GET['material_id'] ?? '';
+
+// Проверяем ID пользователя
+if ($userInput !== '') {
+
+    if (!is_string($userInput)) {
+        http_response_code(400);
+        exit('Неверный параметр пользователя.');
+    }
+
+    $userId = filter_var(
+        $userInput,
+        FILTER_VALIDATE_INT,
+        ['options' => ['min_range' => 1]]
+    );
+
+    if (!is_int($userId)) {
+        http_response_code(400);
+        exit('Неверный ID пользователя.');
+    }
+}
+
+// Проверяем ID материала
+if ($materialInput !== '') {
+
+    if (!is_string($materialInput)) {
+        http_response_code(400);
+        exit('Неверный параметр материала.');
+    }
+
+    $materialId = filter_var(
+        $materialInput,
+        FILTER_VALIDATE_INT,
+        ['options' => ['min_range' => 1]]
+    );
+
+    if (!is_int($materialId)) {
+        http_response_code(400);
+        exit('Неверный ID материала.');
+    }
+}
+
+// 4. Основной запрос к истории
+$sql = '
+    SELECT
         d.id,
         d.user_id,
         d.material_id,
@@ -20,13 +81,51 @@ $stmt = $pdo->query(
         u.full_name,
         u.username,
         m.title AS material_title
-     FROM downloads AS d
-     INNER JOIN users AS u
-         ON d.user_id = u.id
-     INNER JOIN materials AS m
-         ON d.material_id = m.id
-     ORDER BY d.downloaded_at DESC, d.id DESC'
-);
+    FROM downloads AS d
+    INNER JOIN users AS u
+        ON d.user_id = u.id
+    INNER JOIN materials AS m
+        ON d.material_id = m.id
+    WHERE 1 = 1
+';
+
+// 5. Добавляем фильтр пользователя
+if ($userId !== null) {
+    $sql .= ' AND d.user_id = :user_id';
+}
+
+// 6. Добавляем фильтр материала
+if ($materialId !== null) {
+    $sql .= ' AND d.material_id = :material_id';
+}
+
+// 7. Новые записи показываем сверху
+$sql .= '
+    ORDER BY d.downloaded_at DESC, d.id DESC
+';
+
+// 8. Подготавливаем SQL
+$stmt = $pdo->prepare($sql);
+
+// Передаём выбранные значения
+if ($userId !== null) {
+    $stmt->bindValue(
+        ':user_id',
+        $userId,
+        PDO::PARAM_INT
+    );
+}
+
+if ($materialId !== null) {
+    $stmt->bindValue(
+        ':material_id',
+        $materialId,
+        PDO::PARAM_INT
+    );
+}
+
+// 9. Получаем результаты
+$stmt->execute();
 
 $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -64,7 +163,89 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <button type="submit">Выйти</button>
     </form>
+    <h2>Фильтрация скачиваний</h2>
 
+    <form
+        method="GET"
+        action="downloads.php"
+        class="download-filters"
+    >
+
+        <div>
+            <label for="user_id">
+                Пользователь:
+            </label>
+
+            <select
+                name="user_id"
+                id="user_id"
+            >
+                <option value="">
+                    Все пользователи
+                </option>
+
+                <?php foreach ($users as $user): ?>
+
+                    <option
+                        value="<?= (int) $user['id'] ?>"
+                        <?php if (
+                            $userId === (int) $user['id']
+                        ): ?>
+                            selected
+                        <?php endif; ?>
+                    >
+                        <?= esc((string) $user['full_name']) ?>
+                        (<?= esc((string) $user['username']) ?>)
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>
+        </div>
+
+        <div>
+            <label for="material_id">
+                Материал:
+            </label>
+
+            <select
+                name="material_id"
+                id="material_id"
+            >
+                <option value="">
+                    Все материалы
+                </option>
+
+                <?php foreach ($materials as $material): ?>
+
+                    <option
+                        value="<?= (int) $material['id'] ?>"
+                        <?php if (
+                            $materialId ===
+                            (int) $material['id']
+                        ): ?>
+                            selected
+                        <?php endif; ?>
+                    >
+                        <?= esc((string) $material['title']) ?>
+                    </option>
+
+                <?php endforeach; ?>
+
+            </select>
+        </div>
+
+        <div>
+            <button type="submit">
+                Показать
+            </button>
+
+            <a href="downloads.php">
+                Очистить фильтры
+            </a>
+        </div>
+
+    </form>
     <h2>История скачиваний</h2>
 
     <p>

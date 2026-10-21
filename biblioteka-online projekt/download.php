@@ -118,9 +118,9 @@ $stmt = $pdo->prepare(
 );
 
 $stmt->execute([
-    'user_id' => $userId,
-    'material_id' => $materialId,
-    'file_version' => $fileVersion
+    'user_id' => (int) $_SESSION['user_id'],
+    'material_id' => (int) $material['id'],
+    'file_version' => (int) $material['version']
 ]);
 
 // 7. Записываем начало разрешённой выдачи
@@ -134,9 +134,9 @@ try {
     );
 
     $stmt->execute([
-        'user_id' => $userId,
-        'material_id' => $materialId,
-        'file_version' => $fileVersion
+        'user_id' => (int) $_SESSION['user_id'],
+        'material_id' => (int) $material['id'],
+        'file_version' => (int) $material['version']
     ]);
 
 } catch (PDOException $e) {
