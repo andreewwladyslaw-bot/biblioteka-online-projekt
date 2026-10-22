@@ -111,17 +111,7 @@ $userId = (int) $_SESSION['user_id'];
 $materialId = (int) $material['id'];
 $fileVersion = (int) $material['version'];
 
-$stmt = $pdo->prepare(
-    'INSERT INTO downloads
-     (user_id, material_id, file_version)
-     VALUES (:user_id, :material_id, :file_version)'
-);
 
-$stmt->execute([
-    'user_id' => (int) $_SESSION['user_id'],
-    'material_id' => (int) $material['id'],
-    'file_version' => (int) $material['version']
-]);
 
 // 7. Записываем начало разрешённой выдачи
 // Непосредственно перед отправкой PDF
