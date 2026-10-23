@@ -86,17 +86,15 @@ if (!$material) {
         </p>
 
         
-<a
-    href="download.php?id=<?= (int) $material['id'] ?>"
-    class="download-button"
->
-    Скачать PDF
-</a>
+        <a
+        href="download.php?id=<?= (int) $material['id'] ?>"
+        class="download-button"
+        >
+        Скачать PDF
+        </a>
 
 
-        <p class="hint">
-            Скачивание PDF будет реализовано в F04.
-        </p>
+        
     </article>
 
 </main>

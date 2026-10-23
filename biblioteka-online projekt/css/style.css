@@ -323,3 +323,22 @@ button:disabled {
     display: block;
     color: #64748b;
 }
+
+/* День 14 — сообщения проверки формы */
+
+.just-validate-error-label {
+    color: #b91c1c;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.just-validate-error-field {
+    border: 2px solid #dc2626 !important;
+    background-color: #fff7f7;
+}
+
+.material-form input:focus,
+.material-form textarea:focus,
+.material-form select:focus {
+    outline-offset: 2px;
+}

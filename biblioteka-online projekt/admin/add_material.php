@@ -263,6 +263,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form
+        id="materialForm"
         method="POST"
         action="add_material.php"
         enctype="multipart/form-data"
@@ -337,5 +338,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 
 </main>
+
+<!-- Библиотека JustValidate -->
+<script src="https://unpkg.com/just-validate@4.3.0/dist/just-validate.production.min.js"></script>
+
+<!-- Правила проверки формы -->
+<script src="../js/material-validation.js"></script>
+
 </body>
 </html>
