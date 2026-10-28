@@ -51,7 +51,8 @@ if (!preg_match(
 }
 
 // 4. Определяем закрытую папку хранения
-$storageDir = 'C:/xampp/biblioteka_private_pdfs';
+require_once __DIR__ . '/config/storage.php';
+$storageDir = pdfStorageDir();
 
 $storagePath = realpath($storageDir);
 
@@ -111,8 +112,6 @@ $userId = (int) $_SESSION['user_id'];
 $materialId = (int) $material['id'];
 $fileVersion = (int) $material['version'];
 
-
-
 // 7. Записываем начало разрешённой выдачи
 // Непосредственно перед отправкой PDF
 try {
@@ -124,9 +123,9 @@ try {
     );
 
     $stmt->execute([
-        'user_id' => (int) $_SESSION['user_id'],
-        'material_id' => (int) $material['id'],
-        'file_version' => (int) $material['version']
+        'user_id' => $userId,
+        'material_id' => $materialId,
+        'file_version' => $fileVersion
     ]);
 
 } catch (PDOException $e) {

@@ -13,9 +13,9 @@ $id = filter_input(
     ['options' => ['min_range' => 1]]
 );
 
-if (!$id) {
+if (!is_int($id)) {
     http_response_code(404);
-    exit('Материал не найден.');
+    exit('Неверный ID материала. Откройте документ из каталога.');
 }
 
 // Ищем материал, только если он видимый
@@ -37,7 +37,7 @@ $material = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$material) {
     http_response_code(404);
-    exit('Материал не найден.');
+    exit('Материал не найден или скрыт.');
 }
 ?>
 

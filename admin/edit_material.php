@@ -13,7 +13,8 @@ if (!is_int($id)) {
 }
 
 $error = '';
-$storageDir = 'C:/xampp/biblioteka_private_pdfs'; // Как в add_material.php / download.php
+require_once __DIR__ . '/../config/storage.php';
+$storageDir = pdfStorageDir();
 $maxSize = 20 * 1024 * 1024;
 
 $categories = $pdo->query('SELECT id, name FROM categories ORDER BY name')

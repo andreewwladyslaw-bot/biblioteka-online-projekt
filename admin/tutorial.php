@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../config/auth.php';
 requireLogin('../login.php');
 requireAdmin();
+$imageExists = is_file(__DIR__ . '/../images/library_instruction.png');
 ?>
 
 <!DOCTYPE html>
@@ -26,19 +27,17 @@ requireAdmin();
         на веб-странице.
     </p>
 
-    <figure>
-        <img
-            src="../images/library_instruction.png"
-            alt="Иллюстрация этапов поиска и скачивания PDF"
-            width="600"
-            style="max-width:100%;height:auto;"
-        >
-
-        <figcaption>
-            Электронная библиотека:
-            поиск и скачивание материалов.
-        </figcaption>
-    </figure>
+    <?php if ($imageExists): ?>
+        <figure>
+            <img src="../images/library_instruction.png"
+                 alt="Пример каталога и поиска PDF в электронной библиотеке"
+                 width="600" style="max-width:100%;height:auto;">
+            <figcaption>Поиск и скачивание материалов.</figcaption>
+        </figure>
+    <?php else: ?>
+        <p class="hint">Для иллюстрации добавьте собственный скриншот
+            каталога в images/library_instruction.png.</p>
+    <?php endif; ?>
 
     <h2>Основные действия</h2>
 

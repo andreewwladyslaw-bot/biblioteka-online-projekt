@@ -10,9 +10,9 @@ require_once __DIR__ . '/../config/database.php';
 $error = '';
 $maxSize = 20 * 1024 * 1024; // 20 МБ
 
-// Папка за пределами публичного каталога htdocs
-$storageDir = dirname($_SERVER['DOCUMENT_ROOT'])
-    . DIRECTORY_SEPARATOR . 'biblioteka_private_pdfs';
+// Общая защищённая папка для загрузки, редактирования и скачивания
+require_once __DIR__ . '/../config/storage.php';
+$storageDir = pdfStorageDir();
 
 // Получаем категории из MySQL
 $stmt = $pdo->query(
