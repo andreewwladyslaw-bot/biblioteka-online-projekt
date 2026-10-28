@@ -25,21 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Недействительная форма. Обновите страницу.';
     } else {
 
-        $rawUsername = $_POST['username'] ?? null;
-        $rawPassword = $_POST['password'] ?? null;
+        $username = trim(
+            (string) ($_POST['username'] ?? '')
+        );
 
-        // POST может содержать массив вместо строки: его нельзя приводить к string.
-        if (!is_string($rawUsername) || !is_string($rawPassword)) {
-            http_response_code(400);
-            $error = 'Неверные данные формы.';
-        } else {
-            $username = trim($rawUsername);
-            $password = $rawPassword;
-        }
+        $password = (string) ($_POST['password'] ?? '');
 
-        if ($error !== '') {
-            // Ошибка типа поля; SQL-запрос не выполняем.
-        } elseif ($username === '' || $password === '') {
+        if ($username === '' || $password === '') {
             $error = 'Заполните все поля.';
         } else {
 

@@ -1,13 +1,20 @@
-# Электронная библиотека компании / Elektroniczna biblioteka firmowa
+# Biblioteka Online
 
-Учебный сайт на PHP 8.2+, MySQL/MariaDB, HTML, CSS и JavaScript.
+Aplikacja internetowa służąca do zarządzania książkami
+oraz wypożyczeniami.
 
-Функции: вход администратора и сотрудников, каталог и поиск, категории,
-добавление/обновление/скрытие PDF, защищённое скачивание с журналом версий.
+Technologie:
+- HTML
+- CSS
+- JavaScript
+- PHP
+- MySQL
 
-Для установки см. **README_SETUP_RU.md**. База по умолчанию: biblioteka_online_test.
-PDF хранятся ВНЕ htdocs в папке рядом с DocumentRoot: biblioteka_private_pdfs.
-
-Внимание: демонстрационный SQL database/library.sql содержит примеры материалов
-с именами PDF, но НЕ содержит сами PDF-файлы. Для скачивания необходимо положить
-физические PDF в закрытую папку либо загрузить новые через администратора.
+Funkcje:
+- rejestracja
+- logowanie
+- przeglądanie książek
+- wyszukiwanie książek
+- wypożyczanie książek
+- zwracanie książek
+- panel administratora
