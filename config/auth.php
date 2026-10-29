@@ -1,6 +1,5 @@
-
 <?php
-// Запуск сессии пользователя
+// Uruchomienie sesji użytkownika
 if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 0,
@@ -14,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Проверка: вошёл ли пользователь?
+// Sprawdzenie, czy użytkownik jest zalogowany
 function requireLogin(string $loginUrl = 'login.php'): void
 {
     if (empty($_SESSION['user_id'])) {
@@ -23,16 +22,16 @@ function requireLogin(string $loginUrl = 'login.php'): void
     }
 }
 
-// Проверка роли администратора
+// Weryfikacja roli administratora
 function requireAdmin(): void
 {
     if (($_SESSION['role'] ?? '') !== 'admin') {
         http_response_code(403);
-        exit('Доступ запрещён.');
+        exit('Odmowa dostępu.');
     }
 }
 
-// Защитный токен для форм
+// Token zabezpieczający formularze
 function csrfToken(): string
 {
     if (empty($_SESSION['csrf_token'])) {
@@ -44,7 +43,7 @@ function csrfToken(): string
     return $_SESSION['csrf_token'];
 }
 
-// Безопасный вывод текста
+// Bezpieczne wyświetlanie tekstu
 function esc(string $text): string
 {
     return htmlspecialchars(

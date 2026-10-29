@@ -71,7 +71,7 @@ button:disabled {
     }
 }
 
-/* День 5 — форма поиска */
+/* Dzień 5 — formularz wyszukiwania */
 
 .filters {
     display: flex;
@@ -118,7 +118,7 @@ button:disabled {
     text-decoration: none;
 }
 
-/* День 6 — управление категориями */
+/* Dzień 6 — zarządzanie kategoriami */
 
 .category-list {
     display: grid;
@@ -163,7 +163,7 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* День 7 — загрузка PDF */
+/* Dzień 7 — przesyłanie pliku PDF */
 
 .material-form {
     display: flex;
@@ -221,7 +221,7 @@ button:disabled {
     background: #1d4ed8;
 }
 
-/* День 10 — журнал скачиваний */
+/* Dzień 10 — rejestr pobrań */
 
 .table-wrapper {
     overflow-x: auto;
@@ -256,7 +256,7 @@ button:disabled {
     margin-top: 4px;
 }
 
-/* День 12 — фильтрация журнала */
+/* Dzień 12 — filtrowanie rejestru */
 
 .download-filters {
     display: flex;
@@ -324,7 +324,7 @@ button:disabled {
     color: #64748b;
 }
 
-/* День 14 — сообщения проверки формы */
+/* Dzień 14 — komunikaty walidacji formularza */
 
 .just-validate-error-label {
     color: #b91c1c;

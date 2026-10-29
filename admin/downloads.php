@@ -1,6 +1,5 @@
-
 <?php
-// День 10 — журнал скачиваний F07
+// Dzień 10 — rejestr pobrań F07
 
 require_once __DIR__ . '/../config/auth.php';
 
@@ -9,33 +8,33 @@ requireAdmin();
 
 require_once __DIR__ . '/../config/database.php';
 
-// 1. Получаем пользователей
+// 1. Pobieramy użytkowników
 $users = $pdo->query(
     'SELECT id, full_name, username
      FROM users
      ORDER BY full_name, id'
 )->fetchAll(PDO::FETCH_ASSOC);
 
-// 2. Получаем материалы, включая скрытые
+// 2. Pobieramy materiały, także ukryte
 $materials = $pdo->query(
     'SELECT id, title
      FROM materials
      ORDER BY title, id'
 )->fetchAll(PDO::FETCH_ASSOC);
 
-// 3. Читаем фильтры из адреса страницы
+// 3. Odczytujemy filtry z adresu strony
 $userId = null;
 $materialId = null;
 
 $userInput = $_GET['user_id'] ?? '';
 $materialInput = $_GET['material_id'] ?? '';
 
-// Проверяем ID пользователя
+// Sprawdzamy identyfikator użytkownika
 if ($userInput !== '') {
 
     if (!is_string($userInput)) {
         http_response_code(400);
-        exit('Неверный параметр пользователя.');
+        exit('Nieprawidłowy parametr użytkownika.');
     }
 
     $userId = filter_var(
@@ -46,16 +45,16 @@ if ($userInput !== '') {
 
     if (!is_int($userId)) {
         http_response_code(400);
-        exit('Неверный ID пользователя.');
+        exit('Nieprawidłowy identyfikator użytkownika.');
     }
 }
 
-// Проверяем ID материала
+// Sprawdzamy identyfikator materiału
 if ($materialInput !== '') {
 
     if (!is_string($materialInput)) {
         http_response_code(400);
-        exit('Неверный параметр материала.');
+        exit('Nieprawidłowy parametr materiału.');
     }
 
     $materialId = filter_var(
@@ -66,11 +65,11 @@ if ($materialInput !== '') {
 
     if (!is_int($materialId)) {
         http_response_code(400);
-        exit('Неверный ID материала.');
+        exit('Nieprawidłowy identyfikator materiału.');
     }
 }
 
-// 4. Основной запрос к истории
+// 4. Główne zapytanie historii
 $sql = '
     SELECT
         d.id,
@@ -89,25 +88,25 @@ $sql = '
     WHERE 1 = 1
 ';
 
-// 5. Добавляем фильтр пользователя
+// 5. Dodajemy filtr użytkownika
 if ($userId !== null) {
     $sql .= ' AND d.user_id = :user_id';
 }
 
-// 6. Добавляем фильтр материала
+// 6. Dodajemy filtr materiału
 if ($materialId !== null) {
     $sql .= ' AND d.material_id = :material_id';
 }
 
-// 7. Новые записи показываем сверху
+// 7. Najnowsze rekordy wyświetlamy na górze
 $sql .= '
     ORDER BY d.downloaded_at DESC, d.id DESC
 ';
 
-// 8. Подготавливаем SQL
+// 8. Przygotowujemy zapytanie SQL
 $stmt = $pdo->prepare($sql);
 
-// Передаём выбранные значения
+// Przekazujemy wybrane wartości
 if ($userId !== null) {
     $stmt->bindValue(
         ':user_id',
@@ -124,20 +123,20 @@ if ($materialId !== null) {
     );
 }
 
-// 9. Получаем результаты
+// 9. Pobieramy wyniki
 $stmt->execute();
 
 $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Журнал скачиваний</title>
+    <title>Rejestr pobrań</title>
 
     <link rel="stylesheet"
           href="../css/style.css">
@@ -146,11 +145,11 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 <main class="container">
 
-    <h1>Журнал скачиваний PDF</h1>
+    <h1>Rejestr pobrań plików PDF</h1>
 
     <p>
         <a href="dashboard.php">
-            ← Панель администратора
+            ← Panel administratora
         </a>
     </p>
 
@@ -161,9 +160,9 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
             value="<?= esc(csrfToken()) ?>"
         >
 
-        <button type="submit">Выйти</button>
+        <button type="submit">Wyloguj się</button>
     </form>
-    <h2>Фильтрация скачиваний</h2>
+    <h2>Filtrowanie pobrań</h2>
 
     <form
         method="GET"
@@ -173,7 +172,7 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div>
             <label for="user_id">
-                Пользователь:
+                Użytkownik:
             </label>
 
             <select
@@ -181,7 +180,7 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 id="user_id"
             >
                 <option value="">
-                    Все пользователи
+                    Wszyscy użytkownicy
                 </option>
 
                 <?php foreach ($users as $user): ?>
@@ -205,7 +204,7 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div>
             <label for="material_id">
-                Материал:
+                Materiał:
             </label>
 
             <select
@@ -213,7 +212,7 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 id="material_id"
             >
                 <option value="">
-                    Все материалы
+                    Wszystkie materiały
                 </option>
 
                 <?php foreach ($materials as $material): ?>
@@ -237,25 +236,25 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div>
             <button type="submit">
-                Показать
+                Pokaż
             </button>
 
             <a href="downloads.php">
-                Очистить фильтры
+                Wyczyść filtry
             </a>
         </div>
 
     </form>
-    <h2>История скачиваний</h2>
+    <h2>Historia pobrań</h2>
 
     <p>
-        Всего записей:
+        Liczba rekordów:
         <?= count($downloads) ?>
     </p>
 
     <?php if (empty($downloads)): ?>
 
-        <p>Скачиваний пока нет.</p>
+        <p>Brak zarejestrowanych pobrań.</p>
 
     <?php else: ?>
 
@@ -264,10 +263,10 @@ $downloads = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Пользователь</th>
-                        <th>Материал</th>
-                        <th>Версия</th>
-                        <th>Дата и время</th>
+                        <th>Użytkownik</th>
+                        <th>Materiał</th>
+                        <th>Wersja</th>
+                        <th>Data i godzina</th>
                     </tr>
                 </thead>
 

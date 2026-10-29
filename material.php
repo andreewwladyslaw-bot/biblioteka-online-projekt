@@ -1,11 +1,10 @@
-
 <?php
 require_once __DIR__ . '/config/auth.php';
 requireLogin();
 
 require_once __DIR__ . '/config/database.php';
 
-// Получаем идентификатор материала из URL
+// Pobieramy identyfikator materiału z adresu URL
 $id = filter_input(
     INPUT_GET,
     'id',
@@ -13,12 +12,12 @@ $id = filter_input(
     ['options' => ['min_range' => 1]]
 );
 
-if (!is_int($id)) {
+if (!$id) {
     http_response_code(404);
-    exit('Неверный ID материала.');
+    exit('Nie znaleziono materiału.');
 }
 
-// Ищем материал, только если он видимый
+// Wyszukujemy tylko widoczny materiał
 $stmt = $pdo->prepare(
     'SELECT m.id, m.title, m.author,
             m.description, m.version,
@@ -37,12 +36,12 @@ $material = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$material) {
     http_response_code(404);
-    exit('Материал не найден.');
+    exit('Nie znaleziono materiału.');
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -56,7 +55,7 @@ if (!$material) {
 <main class="container">
 
     <p>
-        <a href="index.php">← Вернуться в каталог</a>
+        <a href="index.php">← Wróć do katalogu</a>
     </p>
 
     <article class="card">
@@ -65,21 +64,21 @@ if (!$material) {
         </h1>
 
         <p>
-            <strong>Автор:</strong>
+            <strong>Autor:</strong>
             <?= esc((string) $material['author']) ?>
         </p>
 
         <p>
-            <strong>Категория:</strong>
+            <strong>Kategoria:</strong>
             <?= esc((string) $material['category_name']) ?>
         </p>
 
         <p>
-            <strong>Версия:</strong>
+            <strong>Wersja:</strong>
             <?= (int) $material['version'] ?>
         </p>
 
-        <h2>Описание</h2>
+        <h2>Opis</h2>
 
         <p>
             <?= nl2br(esc((string) $material['description'])) ?>
@@ -90,7 +89,7 @@ if (!$material) {
         href="download.php?id=<?= (int) $material['id'] ?>"
         class="download-button"
         >
-        Скачать PDF
+        Pobierz PDF
         </a>
 
 

@@ -1,10 +1,9 @@
-
 <?php
 require_once __DIR__ . '/config/auth.php';
 
 requireLogin();
 
-// Выход только через защищённую POST-форму
+// Wylogowanie wyłącznie przez zabezpieczony formularz POST
 if (
     $_SERVER['REQUEST_METHOD'] !== 'POST' ||
     !is_string($_POST['csrf_token'] ?? null) ||
@@ -14,13 +13,13 @@ if (
     )
 ) {
     http_response_code(403);
-    exit('Недопустимый запрос.');
+    exit('Niedozwolone żądanie.');
 }
 
-// Удаляем данные сессии
+// Czyścimy dane sesji
 $_SESSION = [];
 
-// Удаляем cookie сессии
+// Usuwamy plik cookie sesji
 if (ini_get('session.use_cookies')) {
     $params = session_get_cookie_params();
 
@@ -33,9 +32,9 @@ if (ini_get('session.use_cookies')) {
     ]);
 }
 
-// Завершаем сессию
+// Kończymy sesję
 session_destroy();
 
-// Возвращаем на страницу входа
+// Przekierowujemy na stronę logowania
 header('Location: login.php');
 exit;

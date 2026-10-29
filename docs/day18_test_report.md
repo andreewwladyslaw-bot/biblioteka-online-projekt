@@ -1,64 +1,76 @@
-День 18 — Полное тестирование электронной библиотеки (П01–П08)
-Дата: 27.10.2026
-Проект: Elektroniczna biblioteka firmowa (PHP + MySQL)
-Рабочая БД: biblioteka_online_test
-Проверяющий:
-Фактически отработано часов: 7
-Заполни фактические результаты. Не отмечай тесты успешными заранее. Изменяющие проверки выполняй на учебных материалах или в тестовой восстановленной копии.
+# Dzień 18 — Pełne testowanie biblioteki elektronicznej (P01–P08)
 
-Тест	Проверка	Ожидаемый результат	Фактический результат	Статус	Доказательство
-П01	Вход и выход	Верный пароль впускает, неверный — нет; после выхода нет доступа		проверено	
-П02	Каталог	Видимые материалы показаны; скрытые не показаны; карточка корректна		проверено	
-П03	Поиск	Название, автор, категория, пустой результат, сброс		 проверено	
-П04	PDF	Скачивание работает, +1 запись в журнал на один PDF; карточка не пишет лог		 проверено	
-П05	Материалы	Добавление, проверки PDF, версия +1, история и скрытие		 проверено	
-П06	Категории	Добавление, переименование, запрет удаления непустой, удаление пустой		 проверено	
-П07	Журнал	Два сотрудника, фильтры по сотруднику и материалу, новые сверху		 проверено	
-П08	Права	Нет скачивания без входа; у сотрудника нет доступа к редактированию или журналу		 проверено	
+**Data:** 27.10.2026  
+**Projekt:** Elektroniczna biblioteka firmowa (PHP + MySQL)  
+**Baza robocza:** `biblioteka_online_test`  
+**Osoba testująca:** [nie podano w pierwotnym raporcie]  
+**Liczba przepracowanych godzin według notatek:** 7
 
+> W oryginalnym dokumencie zadeklarowano „8/8 zaliczonych”, ale szczegółowe wyniki i dowody nie zostały wpisane, a pola kontrolne nie były zaznaczone. Poniżej zachowano ten stan, bez dopisywania wyników.
 
-П01. Авторизация
-- [ ] Вход admin_demo с действующим тестовым паролем.
-- [ ] Вход employee1 и employee2.
-- [ ] Неверный пароль отклоняется.
-- [ ] После выхода защищённые страницы недоступны.
-П02. Каталог
-- [ ] Каталог показывает только is_visible = 1.
-- [ ] Карточка существующего видимого материала открывается и данные корректны.
-- [ ] Скрытая карточка не открывается.
-П03. Поиск
-- [ ] Поиск по названию и автору.
-- [ ] Фильтр по категории вместе с поиском.
-- [ ] Несуществующая строка: «Ничего не найдено».
-- [ ] Сброс условий показывает весь видимый каталог.
-П04. Скачивание PDF
-- [ ] PDF из закрытого хранилища скачивается и открывается.
-- [ ] После первого скачивания одна новая запись.
-- [ ] После второго скачивания ещё одна новая запись.
-- [ ] Просмотр карточки не создаёт запись.
-- [ ] В тестовой копии отсутствующий PDF вызывает ошибку без новой записи; файл затем возвращён.
-П05. Материалы
-- [ ] Администратор добавляет учебный материал с PDF.
-- [ ] Пустые обязательные поля отклоняются.
-- [ ] Текстовый и >20 МБ файл отклоняются сервером.
-- [ ] Замена PDF увеличивает version на 1.
-- [ ] Предыдущая запись в downloads сохраняет прежнюю file_version.
-- [ ] Скрытый учебный материал нельзя увидеть или скачать напрямую.
-П06. Категории
-- [ ] Создать учебную категорию и переименовать.
-- [ ] Запрет удаления категории, к которой привязан учебный материал.
-- [ ] Переместить материал в другую категорию и удалить пустую тестовую категорию.
-П07. Журнал
-- [ ] Скачать PDF под employee1 и employee2.
-- [ ] Фильтр по первому сотруднику показывает только его скачивания.
-- [ ] Фильтр по материалу показывает только выбранный PDF.
-- [ ] Совместные фильтры работают, новые записи выше старых.
-П08. Права
-- [ ] После выхода прямой download.php?id=... не выдаёт файл.
-- [ ] employee1 не может открыть admin/downloads.php.
-- [ ] employee1 не может открыть admin/edit_material.php?id=....
-- [ ] В тестовой среде POST на изменение данных от сотрудника отклонён, данные не меняются.
-SQL для проверки
+| Test | Zakres | Oczekiwany rezultat | Status w pierwotnym raporcie | Faktyczny wynik / dowód |
+|---|---|---|---|---|
+| P01 | Logowanie i wylogowanie | Poprawne hasło wpuszcza, błędne odrzuca; po wylogowaniu brak dostępu | oznaczono „sprawdzono” | nie wpisano |
+| P02 | Katalog | Tylko widoczne materiały, prawidłowa karta dokumentu | oznaczono „sprawdzono” | nie wpisano |
+| P03 | Wyszukiwanie | Tytuł, autor, kategoria, brak wyników, reset | oznaczono „sprawdzono” | nie wpisano |
+| P04 | Pobieranie PDF | Plik działa; jedno pobranie dodaje jeden wpis, karta nie dodaje | oznaczono „sprawdzono” | nie wpisano |
+| P05 | Materiały | Dodawanie, walidacja, wersjonowanie, ukrywanie i zachowanie historii | oznaczono „sprawdzono” | nie wpisano |
+| P06 | Kategorie | Dodawanie, zmiana nazwy, blokada usuwania niepustej kategorii | oznaczono „sprawdzono” | nie wpisano |
+| P07 | Historia pobrań | Dwaj pracownicy, filtrowanie i kolejność od najnowszych | oznaczono „sprawdzono” | nie wpisano |
+| P08 | Uprawnienia | Brak pobierania bez logowania; pracownik nie może edytować ani oglądać historii | oznaczono „sprawdzono” | nie wpisano |
+
+## Szczegółowa lista kontrolna — statusy do potwierdzenia
+
+### P01. Logowanie
+- [ ] `admin_demo`: logowanie prawidłowym hasłem.
+- [ ] `employee1` i `employee2`: logowanie.
+- [ ] Błędne hasło odrzucone.
+- [ ] Po wylogowaniu brak dostępu do stron chronionych.
+
+### P02. Katalog
+- [ ] Katalog wyświetla wyłącznie `is_visible = 1`.
+- [ ] Karta istniejącego materiału jest dostępna i zgodna z bazą.
+- [ ] Ukryta karta jest niedostępna.
+
+### P03. Wyszukiwanie
+- [ ] Wyszukiwanie według tytułu i autora.
+- [ ] Filtr kategorii działa z wyszukiwaniem.
+- [ ] Nieistniejące hasło daje „Nie znaleziono żadnych materiałów”.
+- [ ] Reset przywraca cały widoczny katalog.
+
+### P04. Pobieranie PDF
+- [ ] Właściwy PDF pobiera się i otwiera.
+- [ ] Każde z dwóch pobrań tworzy dokładnie jeden nowy wpis.
+- [ ] Otworzenie karty nie tworzy wpisu.
+- [ ] W osobnej testowej kopii brak pliku nie tworzy wpisu; plik został przywrócony.
+
+### P05. Materiały
+- [ ] Administrator dodaje testowy dokument PDF.
+- [ ] Puste obowiązkowe pola są odrzucane.
+- [ ] Plik tekstowy i PDF powyżej 20 MB są odrzucane po stronie serwera.
+- [ ] Wymiana PDF zwiększa wersję o 1.
+- [ ] Dawne wpisy `downloads.file_version` zachowują starą wersję.
+- [ ] Ukrytego dokumentu nie można zobaczyć ani pobrać przez bezpośredni adres.
+
+### P06. Kategorie
+- [ ] Utworzono i zmieniono nazwę kategorii testowej.
+- [ ] Nie można usunąć kategorii z materiałami.
+- [ ] Po przeniesieniu materiału można usunąć pustą kategorię.
+
+### P07. Rejestr pobrań
+- [ ] Pobrano pliki jako `employee1` i `employee2`.
+- [ ] Filtry użytkownika i materiału działają osobno i razem.
+- [ ] Najnowsze pobrania wyświetlają się na górze.
+
+### P08. Uprawnienia
+- [ ] Bez zalogowania bezpośredni adres `download.php?id=...` nie wydaje pliku.
+- [ ] `employee1` nie ma dostępu do `admin/downloads.php`.
+- [ ] `employee1` nie ma dostępu do `admin/edit_material.php?id=...`.
+- [ ] W kopii testowej nieautoryzowana próba POST nie zmieniła danych.
+
+## Zapytania SQL do weryfikacji
+
+```sql
 SELECT COUNT(*) AS total_downloads FROM downloads;
 
 SELECT d.id, u.username, m.title, d.file_version, d.downloaded_at
@@ -69,14 +81,15 @@ ORDER BY d.downloaded_at DESC, d.id DESC;
 
 SELECT id, title, version, is_visible, file_path
 FROM materials ORDER BY id;
-Реестр обнаруженных ошибок
-Код	Приоритет	Проверка	Как повторить	Ожидалось	Получилось	Файл	Скриншот	Статус
-BUG-001								
+```
 
+## Rejestr błędów
 
-Приоритеты: критический (нарушение доступа), высокий (не работает основная функция), средний, низкий.
-Итог
-- Пройдено: 8 / 8
-- Не пройдено: 0 / 8
-- Не проверено: 0 / 8
-- Проблемы для дня 19: проблем не было все работает успешно
+| ID | Priorytet | Test | Sposób odtworzenia | Oczekiwano | Faktycznie | Plik | Zrzut ekranu | Status |
+|---|---|---|---|---|---|---|---|---|
+| BUG-001 | | | | | | | | |
+
+## Podsumowanie z oryginalnych notatek
+
+- Zgłoszono: **8/8 sprawdzone**, **0 błędów**.
+- Uwaga: szczegółowe pola kontrolne i dowody pozostały niewypełnione. Nie wolno traktować samej deklaracji jako pełnego potwierdzenia testów.

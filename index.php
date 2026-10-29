@@ -1,18 +1,17 @@
-
 <?php
 require_once __DIR__ . '/config/auth.php';
 requireLogin();
 
 require_once __DIR__ . '/config/database.php';
 
-// 1. Получаем текст поиска
+// 1. Pobieramy tekst wyszukiwania
 $search = '';
 
 if (isset($_GET['q']) && is_string($_GET['q'])) {
     $search = trim($_GET['q']);
 }
 
-// 2. Получаем выбранную категорию
+// 2. Pobieramy wybraną kategorię
 $categoryId = null;
 
 if (
@@ -30,14 +29,14 @@ if (
     }
 }
 
-// 3. Получаем список категорий
+// 3. Pobieramy listę kategorii
 $categories = $pdo->query(
     'SELECT id, name
      FROM categories
      ORDER BY name ASC'
 )->fetchAll(PDO::FETCH_ASSOC);
 
-// 4. Основной SQL-запрос
+// 4. Główne zapytanie SQL
 $sql = '
     SELECT
         m.id,
@@ -51,7 +50,7 @@ $sql = '
     WHERE m.is_visible = 1
 ';
 
-// 5. Поиск по названию или автору
+// 5. Wyszukiwanie według tytułu lub autora
 if ($search !== '') {
     $sql .= '
         AND (
@@ -61,18 +60,18 @@ if ($search !== '') {
     ';
 }
 
-// 6. Фильтрация по категории
+// 6. Filtrowanie według kategorii
 if ($categoryId !== null) {
     $sql .= ' AND m.category_id = :category_id';
 }
 
-// 7. Сортировка материалов
+// 7. Sortowanie materiałów
 $sql .= ' ORDER BY m.id DESC';
 
-// 8. Подготовка SQL-запроса
+// 8. Przygotowanie zapytania SQL
 $stmt = $pdo->prepare($sql);
 
-// 9. Передача параметров
+// 9. Przekazanie parametrów
 if ($search !== '') {
     $like = '%' . $search . '%';
 
@@ -97,19 +96,19 @@ if ($categoryId !== null) {
     );
 }
 
-// 10. Выполнение запроса
+// 10. Wykonanie zapytania
 $stmt->execute();
 
 $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-    <title>Каталог — Электронная библиотека</title>
+    <title>Katalog — Biblioteka elektroniczna</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -118,9 +117,9 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <header class="site-header">
         <div>
-            <h1>Электронная библиотека</h1>
+            <h1>Biblioteka elektroniczna</h1>
             <p>
-                Здравствуйте,
+                Witaj,
                 <?= esc((string) $_SESSION['full_name']) ?>
             </p>
         </div>
@@ -130,28 +129,28 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
                    name="csrf_token"
                    value="<?= esc(csrfToken()) ?>">
 
-            <button type="submit">Выйти</button>
+            <button type="submit">Wyloguj się</button>
         </form>
     </header>
 
     <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
         <p>
             <a href="admin/dashboard.php">
-                Панель администратора
+                Panel administratora
             </a>
         </p>
     <?php endif; ?>
 
-    <h2>Каталог материалов</h2>
+    <h2>Katalog materiałów</h2>
 
-    <!-- Форма поиска -->
+    <!-- Formularz wyszukiwania -->
     <form method="GET"
           action="index.php"
           class="filters">
 
         <div class="filter-group">
             <label for="q">
-                Поиск по названию или автору
+                Wyszukiwanie według tytułu lub autora
             </label>
 
             <input
@@ -159,20 +158,20 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 name="q"
                 id="q"
                 value="<?= esc($search) ?>"
-                placeholder="Введите название или автора"
+                placeholder="Wpisz tytuł lub autora"
             >
         </div>
 
         <div class="filter-group">
             <label for="category_id">
-                Категория
+                Kategoria
             </label>
 
             <select name="category_id"
                     id="category_id">
 
                 <option value="">
-                    Все категории
+                    Wszystkie kategorie
                 </option>
 
                 <?php foreach ($categories as $category): ?>
@@ -196,26 +195,26 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <div class="filter-actions">
             <button type="submit">
-                Найти
+                Szukaj
             </button>
 
             <a href="index.php" class="reset-link">
-                Очистить поиск
+                Wyczyść wyszukiwanie
             </a>
         </div>
     </form>
 
-    <!-- Результаты поиска -->
-    <h2>Найденные материалы</h2>
+    <!-- Wyniki wyszukiwania -->
+    <h2>Znalezione materiały</h2>
 
     <?php if (empty($materials)): ?>
 
-        <p>Ничего не найдено</p>
+        <p>Nie znaleziono żadnych materiałów</p>
 
     <?php else: ?>
 
         <p>
-            Найдено материалов:
+            Liczba znalezionych materiałów:
             <?= count($materials) ?>
         </p>
 
@@ -230,12 +229,12 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </h3>
 
                     <p>
-                        <strong>Автор:</strong>
+                        <strong>Autor:</strong>
                         <?= esc((string) $material['author']) ?>
                     </p>
 
                     <p>
-                        <strong>Категория:</strong>
+                        <strong>Kategoria:</strong>
                         <?= esc((string) $material['category_name']) ?>
                     </p>
 
@@ -244,7 +243,7 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </p>
 
                     <a href="material.php?id=<?= (int) $material['id'] ?>">
-                        Открыть материал
+                        Otwórz materiał
                     </a>
 
                 </article>

@@ -17,47 +17,47 @@ document.addEventListener('DOMContentLoaded', () => {
         .addField('#title', [
             {
                 rule: 'required',
-                errorMessage: 'Введите название материала'
+                errorMessage: 'Wpisz tytuł materiału'
             },
             {
                 rule: 'maxLength',
                 value: 200,
-                errorMessage: 'Максимум 200 символов'
+                errorMessage: 'Maksymalnie 200 znaków'
             }
         ])
         .addField('#author', [
             {
                 rule: 'required',
-                errorMessage: 'Введите автора или организацию'
+                errorMessage: 'Wpisz autora lub nazwę organizacji'
             },
             {
                 rule: 'maxLength',
                 value: 150,
-                errorMessage: 'Максимум 150 символов'
+                errorMessage: 'Maksymalnie 150 znaków'
             }
         ])
         .addField('#description', [
             {
                 rule: 'required',
-                errorMessage: 'Введите описание материала'
+                errorMessage: 'Wpisz opis materiału'
             },
             {
                 rule: 'maxLength',
                 value: 5000,
-                errorMessage: 'Слишком длинное описание'
+                errorMessage: 'Opis jest zbyt długi'
             }
         ])
         .addField('#category_id', [
             {
                 rule: 'required',
-                errorMessage: 'Выберите категорию'
+                errorMessage: 'Wybierz kategorię'
             }
         ])
         .addField('#pdf', [
             {
                 rule: 'minFilesCount',
                 value: 1,
-                errorMessage: 'Выберите PDF-файл'
+                errorMessage: 'Wybierz plik PDF'
             },
             {
                 rule: 'files',
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 },
                 errorMessage:
-                    'Разрешён только PDF размером до 20 МБ'
+                    'Dozwolony jest wyłącznie plik PDF o rozmiarze do 20 MB'
             }
         ])
         .onSuccess((event) => {

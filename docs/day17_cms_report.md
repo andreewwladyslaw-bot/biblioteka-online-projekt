@@ -1,38 +1,38 @@
+# Dzień 17 — Zadanie związane z CMS
 
-# День 17 — Учебное задание CMS
+**Data:** 26.10.2026
 
-Дата: 26.10.2026
+**Projekt:** Elektroniczna biblioteka firmowa.
 
-## Проект
-Elektroniczna biblioteka firmowa
+## Zastosowane technologie
 
-## 1. Используемые технологии
-- PHP
-- MySQL / MariaDB
-- HTML и CSS
-- JavaScript
-- XAMPP
+PHP, MySQL/MariaDB, HTML, CSS, JavaScript i XAMPP.
 
-## 2. Функции административной панели
-- Управление материалами PDF
-- Управление категориями
-- Изменение версии PDF
-- Скрытие материалов
-- Просмотр истории скачиваний
-- Проверка прав доступа
+## Funkcjonalności panelu administracyjnego
 
-## 3. Проведённые проверки
-проверял журнал скачивание,добавление pdf материалы,управление каталогом по строне администратора
+- Zarządzanie materiałami PDF.
+- Zarządzanie kategoriami.
+- Zmiana wersji pliku PDF.
+- Ukrywanie materiałów.
+- Przeglądanie historii pobrań.
+- Kontrola uprawnień użytkowników.
 
-## 4. Скриншоты
-находятся в отдельной папке day17_cms
+## Wykonane czynności (według pierwotnego raportu)
 
-## 5. Согласование CMS
-Ответ преподавателя:
-отвечено
+Sprawdzanie rejestru pobrań, dodawania dokumentów PDF i zarządzania katalogiem z poziomu administratora.
 
-## 6. Дополнительное задание
-не требуется
+## Dowody
 
-## 7. Итог
-готово
+Zrzuty ekranu znajdują się w katalogu `docs/day17_cms/`.
+
+## Uzgodnienie zadania CMS
+
+Wychowawca odpowiedział na pytanie, czy panel administracyjny jest wystarczający: **„Myślę, że to wystarczy”**. Zapis ten wskazuje na akceptację zaproponowanego zakresu; nie jest osobnym formalnym zaświadczeniem o zaliczeniu praktyki.
+
+## Dodatkowe zadanie
+
+Według uzgodnienia nie było wymagane instalowanie osobnego systemu WordPress.
+
+## Wynik
+
+Pierwotny raport: **gotowe**.

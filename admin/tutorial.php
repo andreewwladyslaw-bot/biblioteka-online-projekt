@@ -1,4 +1,3 @@
-
 <?php
 require_once __DIR__ . '/../config/auth.php';
 requireLogin('../login.php');
@@ -6,12 +5,12 @@ requireAdmin();
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-    <title>Инструкция по библиотеке</title>
+    <title>Instrukcja obsługi biblioteki</title>
     <link rel="stylesheet"
           href="../css/style.css">
 </head>
@@ -19,39 +18,39 @@ requireAdmin();
 
 <main class="container">
 
-    <h1>Как пользоваться библиотекой</h1>
+    <h1>Jak korzystać z biblioteki</h1>
 
     <p>
-        Учебный пример использования изображения
-        на веб-странице.
+        Przykład edukacyjnego wykorzystania ilustracji
+        na stronie internetowej.
     </p>
 
     <figure>
         <img
             src="../images/library_instruction.png"
-            alt="Иллюстрация этапов поиска и скачивания PDF"
+            alt="Ilustracja wyszukiwania i pobierania dokumentów PDF"
             width="600"
             style="max-width:100%;height:auto;"
         >
 
         <figcaption>
-            Электронная библиотека:
-            поиск и скачивание материалов.
+            Biblioteka elektroniczna:
+            wyszukiwanie i pobieranie materiałów.
         </figcaption>
     </figure>
 
-    <h2>Основные действия</h2>
+    <h2>Podstawowe czynności</h2>
 
     <ol>
-        <li>Войти в библиотеку.</li>
-        <li>Найти материал в каталоге.</li>
-        <li>Открыть карточку PDF.</li>
-        <li>Нажать «Скачать PDF».</li>
+        <li>Zaloguj się do biblioteki.</li>
+        <li>Znajdź materiał w katalogu.</li>
+        <li>Otwórz stronę materiału PDF.</li>
+        <li>Kliknij „Pobierz PDF”.</li>
     </ol>
 
     <p>
         <a href="dashboard.php">
-            Вернуться в панель администратора
+            Wróć do panelu administratora
         </a>
     </p>
 

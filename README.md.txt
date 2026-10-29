@@ -1,20 +1,3 @@
-# Biblioteka Online
-
-Aplikacja internetowa służąca do zarządzania książkami
-oraz wypożyczeniami.
-
-Technologie:
-- HTML
-- CSS
-- JavaScript
-- PHP
-- MySQL
-
-Funkcje:
-- rejestracja
-- logowanie
-- przeglądanie książek
-- wyszukiwanie książek
-- wypożyczanie książek
-- zwracanie książek
-- panel administratora
+Dokumentacja projektu znajduje się w pliku README.md.
+Projekt: Elektroniczna biblioteka firmowa (PHP + MySQL).
+Nie jest to system wypożyczania książek ani publicznej rejestracji użytkowników.

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Paź 15, 2026 at 12:17 PM
+-- Generation Time: Paź 29, 2026 at 11:53 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -37,10 +37,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(4, 'Безопасность'),
-(3, 'Инструкции'),
-(2, 'Программирование'),
-(1, 'Продукт');
+(4, 'Bezpieczeństwo'),
+(3, 'Instrukcje'),
+(1, 'Produkt'),
+(2, 'Programowanie');
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE `downloads` (
   `user_id` int(11) NOT NULL,
   `material_id` int(11) NOT NULL,
   `file_version` int(11) NOT NULL,
-  `downloaded_at` datetime NOT NULL DEFAULT current_timestamp()
+  `downloaded_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -72,16 +72,6 @@ CREATE TABLE `materials` (
   `is_visible` tinyint(1) NOT NULL DEFAULT 1,
   `file_path` varchar(255) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `materials`
---
-
-INSERT INTO `materials` (`id`, `title`, `author`, `description`, `category_id`, `version`, `is_visible`, `file_path`) VALUES
-(1, 'Введение в PHP', 'Учебный отдел', 'Основы языка PHP, переменные, условия и циклы.', 2, 1, 1, 'php_basics.pdf'),
-(2, 'PHP для веб-разработки', 'IT-команда', 'Создание динамических сайтов с помощью PHP.', 2, 1, 1, 'php_web.pdf'),
-(3, 'Руководство по продукту', 'Отдел продукта', 'Инструкция по использованию продукта компании.', 1, 1, 1, 'product_guide.pdf'),
-(4, 'Скрытая инструкция', 'Администратор', 'Черновик, который нельзя показывать сотрудникам.', 3, 1, 0, 'hidden_guide.pdf');
 
 -- --------------------------------------------------------
 
@@ -103,9 +93,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `full_name`, `username`, `password_hash`, `role`, `created_at`) VALUES
-(1, 'Администратор', 'admin_demo', '$2y$12$ztF2nXehtkMYPP1BlrM9JeVW8xT7bdhvnFtt2kpYUrr80xJZotfpa', 'admin', '2026-10-12 11:29:13'),
-(2, 'Сотрудник 1', 'employee1', '$2y$12$Q08n.ZwmMgNbSs0zDcWoCelKHe2CmQhatX14nS7D3gWOedJ32rY3m', 'employee', '2026-10-12 11:29:13'),
-(3, 'Сотрудник 2', 'employee2', '$2y$12$N.pZR6Www4KZ8oIYLM8ePeGEWbqFzthZKQBuhjNQOBtROgsUJyttG', 'employee', '2026-10-12 11:29:13');
+(1, 'Administrator', 'admin_demo', '$2y$12$ztF2nXehtkMYPP1BlrM9JeVW8xT7bdhvnFtt2kpYUrr80xJZotfpa', 'admin', '2026-10-29 10:52:19'),
+(2, 'Pracownik 1', 'employee1', '$2y$12$Q08n.ZwmMgNbSs0zDcWoCelKHe2CmQhatX14nS7D3gWOedJ32rY3m', 'employee', '2026-10-29 10:52:19'),
+(3, 'Pracownik 2', 'employee2', '$2y$12$N.pZR6Www4KZ8oIYLM8ePeGEWbqFzthZKQBuhjNQOBtROgsUJyttG', 'employee', '2026-10-29 10:52:19');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -123,15 +113,15 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `downloads`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_download_user` (`user_id`),
-  ADD KEY `fk_download_material` (`material_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `material_id` (`material_id`);
 
 --
 -- Indeksy dla tabeli `materials`
 --
 ALTER TABLE `materials`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_material_category` (`category_id`);
+  ADD KEY `category_id` (`category_id`);
 
 --
 -- Indeksy dla tabeli `users`
@@ -160,7 +150,7 @@ ALTER TABLE `downloads`
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -176,14 +166,14 @@ ALTER TABLE `users`
 -- Constraints for table `downloads`
 --
 ALTER TABLE `downloads`
-  ADD CONSTRAINT `fk_download_material` FOREIGN KEY (`material_id`) REFERENCES `materials` (`id`),
-  ADD CONSTRAINT `fk_download_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `downloads_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `downloads_ibfk_2` FOREIGN KEY (`material_id`) REFERENCES `materials` (`id`);
 
 --
 -- Constraints for table `materials`
 --
 ALTER TABLE `materials`
-  ADD CONSTRAINT `fk_material_category` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
+  ADD CONSTRAINT `materials_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,106 +1,41 @@
-
 <?php
 require_once __DIR__ . '/../config/auth.php';
-
 requireLogin('../login.php');
 requireAdmin();
 ?>
-
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <title>Панель администратора</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel administratora — Biblioteka elektroniczna</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+<main class="container">
+    <header class="site-header">
+        <div>
+            <h1>Panel administratora</h1>
+            <p>Witaj, <?= esc((string) $_SESSION['full_name']) ?>!</p>
+            <p>Masz uprawnienia administratora.</p>
+        </div>
+        <form action="../logout.php" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= esc(csrfToken()) ?>">
+            <button type="submit">Wyloguj się</button>
+        </form>
+    </header>
 
-    <h1>Панель администратора</h1>
-    
-    <h2>Управление библиотекой</h2>
-
-    <nav>
-        <p>        
-            <a href="categories.php">
-            Управление категориями
-            </a>
-        </p>
-        <p>
-            <a href="add_material.php">
-            Добавить PDF-материал
-            </a>
-        </p>
-
-        <p>
-            <a href="downloads.php">
-            Журнал скачиваний
-            </a>
-        </p>
-        <p>
-            <a href="tutorial.php">
-                Учебная инструкция
-            </a>
-        </p>
-        <p>
-            <a href="../index.php">
-            Перейти в каталог
-            </a>
-        </p>
-        
+    <h2>Zarządzanie biblioteką</h2>
+    <nav aria-label="Menu administratora">
+        <div class="catalog-grid">
+            <p class="card"><a href="materials.php">Zarządzanie materiałami</a></p>
+            <p class="card"><a href="add_material.php">Dodaj materiał PDF</a></p>
+            <p class="card"><a href="categories.php">Zarządzanie kategoriami</a></p>
+            <p class="card"><a href="downloads.php">Rejestr pobrań</a></p>
+            <p class="card"><a href="tutorial.php">Instrukcja dla użytkownika</a></p>
+            <p class="card"><a href="../index.php">Przejdź do katalogu</a></p>
+        </div>
     </nav>
-    
-<h2>Управление материалами</h2>
-
-<p>
-    <a href="add_material.php">
-        Добавить PDF-материал
-    </a>
-</p>
-
-<p>
-    <a href="categories.php">
-        Управление категориями
-    </a>
-</p>
-
-<p>
-    <a href="../index.php">
-        Открыть каталог
-    </a>
-</p>
-
-<p>
-    <a href="materials.php">
-        Управление материалами
-    </a>
-</p>
-
-
-
-    <p>
-        Здравствуйте,
-        <?= esc((string) $_SESSION['full_name']) ?>!
-    </p>
-
-    <p>У вас есть права администратора.</p>
-
-   
-
-    <a href="../index.php">
-        Вернуться на главную
-    </a>
-
-    <form action="../logout.php" method="POST">
-        <input
-            type="hidden"
-            name="csrf_token"
-            value="<?= esc(csrfToken()) ?>"
-        >
-
-        <button type="submit">Выйти</button>
-    </form>
-
+</main>
 </body>
 </html>

@@ -1,4 +1,3 @@
-
 <?php
 
 $host = 'localhost';
@@ -25,7 +24,7 @@ try {
 
 } catch (PDOException $e) {
     error_log($e->getMessage());
-    die("Ошибка подключения к базе данных.");
+    die("Błąd połączenia z bazą danych.");
 }
 
 

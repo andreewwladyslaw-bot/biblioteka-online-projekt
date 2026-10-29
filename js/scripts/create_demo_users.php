@@ -1,10 +1,9 @@
-
 <?php
 
-// Запускать только из терминала
+// Uruchamiać wyłącznie w terminalu
 if (PHP_SAPI !== 'cli') {
     http_response_code(403);
-    exit('Доступ запрещён');
+    exit('Odmowa dostępu');
 }
 
 function ask($message) {
@@ -12,8 +11,8 @@ function ask($message) {
     return trim(fgets(STDIN));
 }
 
-$dbUser = ask("Пользователь MySQL: ");
-$dbPass = ask("Пароль MySQL: ");
+$dbUser = ask("Użytkownik MySQL: ");
+$dbPass = ask("Hasło MySQL: ");
 
 try {
     $pdo = new PDO(
@@ -24,9 +23,9 @@ try {
     );
 
     $accounts = [
-        ['Администратор', 'admin_demo', 'admin'],
-        ['Сотрудник 1', 'employee1', 'employee'],
-        ['Сотрудник 2', 'employee2', 'employee']
+        ['Administrator', 'admin_demo', 'admin'],
+        ['Pracownik 1', 'employee1', 'employee'],
+        ['Pracownik 2', 'employee2', 'employee']
     ];
 
     $stmt = $pdo->prepare(
@@ -36,10 +35,10 @@ try {
     );
 
     foreach ($accounts as [$name, $login, $role]) {
-        $password = ask("Тестовый пароль для $login: ");
+        $password = ask("Hasło testowe dla $login: ");
 
         if (strlen($password) < 12) {
-            echo "Минимум 12 символов. Аккаунт пропущен.\n";
+            echo "Minimum 12 znaków. Konto zostało pominięte.\n";
             continue;
         }
 
@@ -47,10 +46,10 @@ try {
 
         $stmt->execute([$name, $login, $hash, $role]);
 
-        echo "Создан пользователь: $login\n";
+        echo "Utworzono użytkownika: $login\n";
     }
 
 } catch (PDOException $e) {
-    echo "Ошибка базы данных: " . $e->getMessage() . "\n";
+    echo "Błąd bazy danych: " . $e->getMessage() . "\n";
 }
 ?>

@@ -1,4 +1,3 @@
-
 <?php
 require_once __DIR__ . '/../config/auth.php';
 requireLogin('../login.php');
@@ -9,9 +8,9 @@ require_once __DIR__ . '/../config/database.php';
 $error = '';
 
 $messages = [
-    'added' => 'Категория успешно добавлена.',
-    'renamed' => 'Категория переименована.',
-    'deleted' => 'Категория удалена.'
+    'added' => 'Kategoria została dodana.',
+    'renamed' => 'Zmieniono nazwę kategorii.',
+    'deleted' => 'Kategoria została usunięta.'
 ];
 
 $status = is_string($_GET['status'] ?? null)
@@ -20,7 +19,7 @@ $status = is_string($_GET['status'] ?? null)
 
 $message = $messages[$status] ?? '';
 
-// Обрабатываем формы
+// Obsługujemy formularze
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $token = $_POST['csrf_token'] ?? null;
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         !hash_equals(csrfToken(), $token)
     ) {
         http_response_code(403);
-        exit('Недействительный запрос.');
+        exit('Nieprawidłowe żądanie.');
     }
 
     $action = $_POST['action'] ?? '';
@@ -55,12 +54,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
 
-        // Добавление категории
+        // Dodawanie kategorii
         if ($action === 'add') {
 
             if ($name === '' ||
                 mb_strlen($name, 'UTF-8') > 100) {
-                $error = 'Введите название до 100 символов.';
+                $error = 'Podaj nazwę o długości do 100 znaków.';
             } else {
 
                 $stmt = $pdo->prepare(
@@ -76,16 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-        // Переименование категории
+        // Zmiana nazwy kategorii
         } elseif ($action === 'rename') {
 
             if (!is_int($id)) {
-                $error = 'Неверный ID категории.';
+                $error = 'Nieprawidłowy identyfikator kategorii.';
             } elseif (
                 $name === '' ||
                 mb_strlen($name, 'UTF-8') > 100
             ) {
-                $error = 'Введите название до 100 символов.';
+                $error = 'Podaj nazwę o długości do 100 znaków.';
             } else {
 
                 $stmt = $pdo->prepare(
@@ -103,14 +102,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-        // Удаление пустой категории
+        // Usuwanie pustej kategorii
         } elseif ($action === 'delete') {
 
             if (!is_int($id)) {
-                $error = 'Неверный ID категории.';
+                $error = 'Nieprawidłowy identyfikator kategorii.';
             } else {
 
-                // Считаем связанные материалы
+                // Zliczamy powiązane materiały
                 $stmt = $pdo->prepare(
                     'SELECT COUNT(*)
                      FROM materials
@@ -123,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($count > 0) {
 
-                    $error = 'Нельзя удалить категорию с материалами.';
+                    $error = 'Nie można usunąć kategorii zawierającej materiały.';
 
                 } else {
 
@@ -142,7 +141,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
         } else {
-            $error = 'Неизвестное действие.';
+            $error = 'Nieznana operacja.';
         }
 
     } catch (PDOException $e) {
@@ -150,15 +149,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error_log($e->getMessage());
 
         if ($e->getCode() === '23000') {
-            $error = 'Категория уже существует или '
-                . 'связана с материалами.';
+            $error = 'Kategoria już istnieje lub '
+                . 'jest powiązana z materiałami.';
         } else {
-            $error = 'Ошибка работы с базой данных.';
+            $error = 'Błąd podczas pracy z bazą danych.';
         }
     }
 }
 
-// Загружаем список категорий
+// Pobieramy listę kategorii
 $stmt = $pdo->query(
     'SELECT
         c.id,
@@ -175,27 +174,27 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-    <title>Управление категориями</title>
+    <title>Zarządzanie kategoriami</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <main class="container">
 
-    <h1>Управление категориями</h1>
+    <h1>Zarządzanie kategoriami</h1>
 
     <p>
         <a href="dashboard.php">
-            Панель администратора
+            Panel administratora
         </a>
         |
         <a href="../index.php">
-            Каталог
+            Katalog
         </a>
     </p>
 
@@ -203,7 +202,7 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="hidden"
                name="csrf_token"
                value="<?= esc(csrfToken()) ?>">
-        <button type="submit">Выйти</button>
+        <button type="submit">Wyloguj się</button>
     </form>
 
     <?php if ($message !== ''): ?>
@@ -218,7 +217,7 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </p>
     <?php endif; ?>
 
-    <h2>Добавить категорию</h2>
+    <h2>Dodaj kategorię</h2>
 
     <form method="POST" action="categories.php">
         <input type="hidden"
@@ -229,7 +228,7 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
                name="csrf_token"
                value="<?= esc(csrfToken()) ?>">
 
-        <label for="name">Название категории:</label>
+        <label for="name">Nazwa kategorii:</label>
 
         <input
             type="text"
@@ -239,13 +238,13 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
             required
         >
 
-        <button type="submit">Добавить</button>
+        <button type="submit">Dodaj</button>
     </form>
 
-    <h2>Список категорий</h2>
+    <h2>Lista kategorii</h2>
 
     <?php if (empty($categories)): ?>
-        <p>Категорий пока нет.</p>
+        <p>Brak kategorii.</p>
     <?php else: ?>
 
         <div class="category-list">
@@ -259,11 +258,11 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </h3>
 
                 <p>
-                    Материалов:
+                    Materiałów:
                     <?= (int) $category['materials_count'] ?>
                 </p>
 
-                <h4>Переименовать</h4>
+                <h4>Zmień nazwę</h4>
 
                 <form method="POST"
                       action="categories.php">
@@ -289,11 +288,11 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     >
 
                     <button type="submit">
-                        Сохранить
+                        Zapisz
                     </button>
                 </form>
 
-                <h4>Удалить категорию</h4>
+                <h4>Usuń kategorię</h4>
 
                 <form method="POST"
                       action="categories.php">
@@ -315,13 +314,13 @@ $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     ): ?>
 
                         <button type="submit" disabled>
-                            Удаление запрещено
+                            Nie można usunąć
                         </button>
 
                     <?php else: ?>
 
                         <button type="submit">
-                            Удалить
+                            Usuń
                         </button>
 
                     <?php endif; ?>

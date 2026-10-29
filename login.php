@@ -1,9 +1,8 @@
-
 <?php
 require_once __DIR__ . '/config/auth.php';
 require_once __DIR__ . '/config/database.php';
 
-// Если пользователь уже вошёл
+// Jeśli użytkownik jest już zalogowany
 if (!empty($_SESSION['user_id'])) {
     header('Location: index.php');
     exit;
@@ -13,7 +12,7 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // Проверка защитного токена
+    // Weryfikacja tokenu zabezpieczającego
     if (
         !is_string($_POST['csrf_token'] ?? null) ||
         !hash_equals(
@@ -22,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         )
     ) {
         http_response_code(403);
-        $error = 'Недействительная форма. Обновите страницу.';
+        $error = 'Nieprawidłowy formularz. Odśwież stronę.';
     } else {
 
         $username = trim(
@@ -32,10 +31,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $password = (string) ($_POST['password'] ?? '');
 
         if ($username === '' || $password === '') {
-            $error = 'Заполните все поля.';
+            $error = 'Wypełnij wszystkie pola.';
         } else {
 
-            // Поиск пользователя в базе
+            // Wyszukiwanie użytkownika w bazie
             $stmt = $pdo->prepare(
                 'SELECT id, full_name, username,
                         password_hash, role
@@ -50,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Проверка пароля и роли
+            // Sprawdzenie hasła i roli
             if (
                 $user &&
                 password_verify(
@@ -76,24 +75,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            $error = 'Неверный логин или пароль.';
+            $error = 'Nieprawidłowy login lub hasło.';
         }
     }
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-    <title>Вход — Электронная библиотека</title>
+    <title>Logowanie — Biblioteka elektroniczna</title>
 </head>
 <body>
 
-    <h1>Электронная библиотека компании</h1>
-    <h2>Вход в систему</h2>
+    <h1>Elektroniczna biblioteka firmowa</h1>
+    <h2>Logowanie do systemu</h2>
 
     <?php if ($error !== ''): ?>
         <p style="color: red;">
@@ -103,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="POST" action="login.php">
 
-        <label for="username">Логин:</label>
+        <label for="username">Login:</label>
         <input
             type="text"
             id="username"
@@ -112,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             required
         >
 
-        <label for="password">Пароль:</label>
+        <label for="password">Hasło:</label>
         <input
             type="password"
             id="password"
@@ -127,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             value="<?= esc(csrfToken()) ?>"
         >
 
-        <button type="submit">Войти</button>
+        <button type="submit">Zaloguj się</button>
     </form>
 
 </body>

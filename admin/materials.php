@@ -14,23 +14,23 @@ $stmt = $pdo->query(
 $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Управление материалами</title>
+    <title>Zarządzanie materiałami</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <main class="container">
-    <h1>Управление материалами</h1>
-    <p><a href="dashboard.php">← Панель администратора</a></p>
-    <p><a href="add_material.php">Добавить PDF</a></p>
+    <h1>Zarządzanie materiałami</h1>
+    <p><a href="dashboard.php">← Panel administratora</a></p>
+    <p><a href="add_material.php">Dodaj PDF</a></p>
     <?php if (!$materials): ?>
-        <p>Материалов пока нет.</p>
+        <p>Brak materiałów.</p>
     <?php else: ?>
         <table border="1" cellpadding="8" cellspacing="0">
-            <thead><tr><th>ID</th><th>Название</th><th>Автор</th><th>Категория</th><th>Версия</th><th>Статус</th><th>Действие</th></tr></thead>
+            <thead><tr><th>ID</th><th>Tytuł</th><th>Autor</th><th>Kategoria</th><th>Wersja</th><th>Status</th><th>Działanie</th></tr></thead>
             <tbody>
                 <?php foreach ($materials as $m): ?>
                     <tr>
@@ -39,8 +39,8 @@ $materials = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= esc((string) $m['author']) ?></td>
                         <td><?= esc((string) $m['category_name']) ?></td>
                         <td><?= (int) $m['version'] ?></td>
-                        <td><?= (int) $m['is_visible'] === 1 ? 'Виден' : 'Скрыт' ?></td>
-                        <td><a href="edit_material.php?id=<?= (int) $m['id'] ?>">Изменить</a></td>
+                        <td><?= (int) $m['is_visible'] === 1 ? 'Widoczny' : 'Ukryty' ?></td>
+                        <td><a href="edit_material.php?id=<?= (int) $m['id'] ?>">Edytuj</a></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

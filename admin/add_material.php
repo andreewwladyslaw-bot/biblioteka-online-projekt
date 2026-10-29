@@ -1,4 +1,3 @@
-
 <?php
 require_once __DIR__ . '/../config/auth.php';
 
@@ -8,13 +7,13 @@ requireAdmin();
 require_once __DIR__ . '/../config/database.php';
 
 $error = '';
-$maxSize = 20 * 1024 * 1024; // 20 МБ
+$maxSize = 20 * 1024 * 1024; // 20 MB
 
-// Папка за пределами публичного каталога htdocs
+// Folder poza publicznym katalogiem htdocs
 $storageDir = dirname($_SERVER['DOCUMENT_ROOT'])
     . DIRECTORY_SEPARATOR . 'biblioteka_private_pdfs';
 
-// Получаем категории из MySQL
+// Pobieramy kategorie z MySQL
 $stmt = $pdo->query(
     'SELECT id, name
      FROM categories
@@ -23,10 +22,10 @@ $stmt = $pdo->query(
 
 $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Обработка формы
+// Obsługa formularza
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    // 1. Проверка CSRF
+    // 1. Weryfikacja tokenu CSRF
     $token = $_POST['csrf_token'] ?? null;
 
     if (
@@ -34,10 +33,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         !hash_equals(csrfToken(), $token)
     ) {
         http_response_code(403);
-        exit('Недействительный запрос.');
+        exit('Nieprawidłowe żądanie.');
     }
 
-    // 2. Получение данных
+    // 2. Pobieranie danych
     $title = is_string($_POST['title'] ?? null)
         ? trim($_POST['title'])
         : '';
@@ -56,21 +55,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ['options' => ['min_range' => 1]]
     );
 
-    // 3. Проверка обязательных полей
+    // 3. Kontrola wymaganych pól
     if (
         $title === '' ||
         $author === '' ||
         $description === '' ||
         !is_int($categoryId)
     ) {
-        $error = 'Заполните все обязательные поля.';
+        $error = 'Wypełnij wszystkie wymagane pola.';
 
     } elseif (
         mb_strlen($title) > 200 ||
         mb_strlen($author) > 150 ||
         mb_strlen($description) > 5000
     ) {
-        $error = 'Превышена допустимая длина текста.';
+        $error = 'Przekroczono dozwoloną długość tekstu.';
 
     } elseif (
         !isset($_FILES['pdf']) ||
@@ -78,17 +77,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         !isset($_FILES['pdf']['error']) ||
         !is_int($_FILES['pdf']['error'])
     ) {
-        $error = 'Выберите PDF-файл.';
+        $error = 'Wybierz plik PDF.';
 
     } else {
 
         $file = $_FILES['pdf'];
 
-        // 4. Проверка ошибок загрузки
+        // 4. Obsługa błędów przesyłania pliku
         if ($file['error'] !== UPLOAD_ERR_OK) {
 
-            $error = 'Ошибка загрузки файла. '
-                . 'Проверьте размер и настройки PHP.';
+            $error = 'Błąd przesyłania pliku. '
+                . 'Sprawdź rozmiar pliku i konfigurację PHP.';
 
         } elseif (
             !isset($file['size'], $file['tmp_name'],
@@ -99,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $file['size'] <= 0 ||
             $file['size'] > $maxSize
         ) {
-            $error = 'PDF должен быть не больше 20 МБ.';
+            $error = 'Plik PDF nie może przekraczać 20 MB.';
 
         } elseif (
             strtolower(pathinfo(
@@ -107,15 +106,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 PATHINFO_EXTENSION
             )) !== 'pdf'
         ) {
-            $error = 'Разрешён только формат PDF.';
+            $error = 'Dozwolony jest wyłącznie format PDF.';
 
         } elseif (!is_uploaded_file($file['tmp_name'])) {
 
-            $error = 'Недопустимый загруженный файл.';
+            $error = 'Przesłany plik jest nieprawidłowy.';
 
         } else {
 
-            // 5. Проверка MIME-типа и заголовка PDF
+            // 5. Sprawdzenie typu MIME i nagłówka PDF
             $finfo = new finfo(FILEINFO_MIME_TYPE);
             $mime = $finfo->file($file['tmp_name']);
 
@@ -132,10 +131,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $mime !== 'application/pdf' ||
                 $signature !== '%PDF-'
             ) {
-                $error = 'Файл не является допустимым PDF.';
+                $error = 'Plik nie jest poprawnym dokumentem PDF.';
             } else {
 
-                // 6. Проверка существования категории
+                // 6. Sprawdzenie istnienia kategorii
                 $stmt = $pdo->prepare(
                     'SELECT COUNT(*)
                      FROM categories
@@ -148,22 +147,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ((int) $stmt->fetchColumn() === 0) {
 
-                    $error = 'Выбранная категория не существует.';
+                    $error = 'Wybrana kategoria nie istnieje.';
 
                 } elseif (!is_dir($storageDir)) {
 
-                    $error = 'Папка хранения PDF не найдена.';
+                    $error = 'Nie znaleziono folderu przechowywania plików PDF.';
 
                 } elseif (!is_writable($storageDir)) {
 
-                    $error = 'Нет прав на запись PDF.';
+                    $error = 'Brak uprawnień do zapisu plików PDF.';
 
                 } else {
 
                     $destination = null;
 
                     try {
-                        // 7. Безопасное имя файла
+                        // 7. Bezpieczna nazwa pliku
                         $filename = bin2hex(
                             random_bytes(16)
                         ) . '.pdf';
@@ -172,17 +171,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             . DIRECTORY_SEPARATOR
                             . $filename;
 
-                        // 8. Перемещаем PDF
+                        // 8. Przenosimy plik PDF
                         if (!move_uploaded_file(
                             $file['tmp_name'],
                             $destination
                         )) {
                             throw new RuntimeException(
-                                'Не удалось сохранить PDF.'
+                                'Nie udało się zapisać pliku PDF.'
                             );
                         }
 
-                        // 9. Сохраняем запись в MySQL
+                        // 9. Zapisujemy rekord w MySQL
                         $stmt = $pdo->prepare(
                             'INSERT INTO materials
                              (title, author, description,
@@ -209,8 +208,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     } catch (Throwable $e) {
 
-                        // Удаляем файл, если запись
-                        // в MySQL не сохранилась
+                        // Usuwamy plik, jeśli rekord
+                        // nie został zapisany w MySQL
                         if (
                             $destination !== null &&
                             is_file($destination)
@@ -220,7 +219,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         error_log($e->getMessage());
 
-                        $error = 'Не удалось добавить материал.';
+                        $error = 'Nie udało się dodać materiału.';
                     }
                 }
             }
@@ -230,29 +229,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
-    <title>Добавление материала</title>
+    <title>Dodawanie materiału</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <main class="container">
 
-    <h1>Добавление PDF-материала</h1>
+    <h1>Dodawanie materiału PDF</h1>
 
     <p>
         <a href="dashboard.php">
-            ← Панель администратора
+            ← Panel administratora
         </a>
     </p>
 
     <?php if (($_GET['success'] ?? '') === '1'): ?>
         <p class="success">
-            Материал успешно добавлен!
+            Materiał został dodany pomyślnie!
         </p>
     <?php endif; ?>
 
@@ -276,7 +275,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             value="<?= esc(csrfToken()) ?>"
         >
 
-        <label for="title">Название материала:</label>
+        <label for="title">Tytuł materiału:</label>
         <input
             type="text"
             id="title"
@@ -285,7 +284,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             required
         >
 
-        <label for="author">Автор или организация:</label>
+        <label for="author">Autor lub organizacja:</label>
         <input
             type="text"
             id="author"
@@ -294,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             required
         >
 
-        <label for="description">Описание:</label>
+        <label for="description">Opis:</label>
         <textarea
             id="description"
             name="description"
@@ -303,13 +302,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             required
         ></textarea>
 
-        <label for="category_id">Категория:</label>
+        <label for="category_id">Kategoria:</label>
         <select
             id="category_id"
             name="category_id"
             required
         >
-            <option value="">Выберите категорию</option>
+            <option value="">Wybierz kategorię</option>
 
             <?php foreach ($categories as $category): ?>
                 <option
@@ -320,7 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endforeach; ?>
         </select>
 
-        <label for="pdf">PDF-файл:</label>
+        <label for="pdf">Plik PDF:</label>
         <input
             type="file"
             id="pdf"
@@ -329,20 +328,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             required
         >
 
-        <p>Максимальный размер PDF: 20 МБ.</p>
+        <p>Maksymalny rozmiar pliku PDF: 20 MB.</p>
 
         <button type="submit">
-            Добавить материал
+            Dodaj materiał
         </button>
 
     </form>
 
 </main>
 
-<!-- Библиотека JustValidate -->
+<!-- Biblioteka JustValidate -->
 <script src="https://unpkg.com/just-validate@4.3.0/dist/just-validate.production.min.js"></script>
 
-<!-- Правила проверки формы -->
+<!-- Zasady walidacji formularza -->
 <script src="../js/material-validation.js"></script>
 
 </body>
