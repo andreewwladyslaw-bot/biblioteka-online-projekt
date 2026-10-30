@@ -74,7 +74,53 @@ http://localhost/biblioteka-online%20projekt/login.php
 Przykładowe nazwy kont w zrzucie: `admin_demo`, `employee1`, `employee2`. Hasła pochodzą z przygotowanego wcześniej środowiska testowego; jeżeli zostały zmienione, użyj aktualnych danych dostępowych. Kont nie trzeba tworzyć ponownie po imporcie zrzutu, który już je zawiera.
 
 Skrypt `js/scripts/create_demo_users.php` można uruchomić z terminala tylko dla pustej tabeli użytkowników; nie uruchamiaj go drugi raz na istniejących loginach.
+Konta demonstracyjne
 
+Aplikacja „Elektroniczna biblioteka firmowa” nie posiada formularza samodzielnej rejestracji. Konta użytkowników są tworzone w bazie danych MySQL.
+
+Aby uruchomić wersję demonstracyjną, należy zaimportować plik biblioteka_online_test_create.sql do MySQL.
+
+Dane logowania do wersji demonstracyjnej
+
+Rola
+
+Login
+
+Hasło
+
+Administrator
+
+admin_demo
+
+AdminTest2026!
+
+Pracownik 1
+
+employee1
+
+Employee1Test2026!
+
+Pracownik 2
+
+employee2
+
+Employee2Test2026!
+
+Uruchomienie aplikacji
+
+Uruchom Apache i MySQL w XAMPP.
+
+Zaimportuj bazę danych wraz z kontami demonstracyjnymi.
+
+Skonfiguruj połączenie MySQL w pliku config/database.php.
+
+Otwórz stronę http://localhost/biblioteka-online%20projekt/login.php.
+
+Zaloguj się na wybrane konto demonstracyjne.
+
+Administrator może zarządzać materiałami PDF, kategoriami i historią pobierania. Pracownicy mogą przeglądać katalog, wyszukiwać dokumenty i pobierać pliki PDF.
+
+Uwaga: Podane konta i hasła służą wyłącznie do testowania aplikacji w środowisku lokalnym. Nie należy ich wykorzystywać w systemie produkcyjnym.
 ## 7. Tłumaczenie istniejących rekordów MySQL
 
 Tłumaczenie plików PHP **nie zmienia automatycznie** wartości zapisanych już w MySQL. Aby przetłumaczyć pierwotne rosyjskie dane demonstracyjne:
