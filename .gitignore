@@ -1,0 +1,21 @@
+# Konfiguracja lokalna z hasłem bazy danych
+/config/database.php
+.env
+.env.*
+
+# Archiwa i prywatne dane
+/backups/
+/restore_test_pdfs/
+*.bak
+*.log
+*.zip
+
+# Kopie SQL i rzeczywiste PDF-y nie powinny trafić do publicznego repozytorium
+/database/library.sql
+/database/*backup*.sql
+/database/*final*.sql
+*.pdf
+
+# Pliki systemowe
+Thumbs.db
+.DS_Store

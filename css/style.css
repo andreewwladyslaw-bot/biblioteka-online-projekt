@@ -1,0 +1,344 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+    color: #17202b;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 28px 20px;
+}
+
+.site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.catalog-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    padding: 20px;
+    margin-bottom: 15px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+
+a {
+    color: #1d4ed8;
+}
+
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #1d4ed8;
+    color: white;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+.hint {
+    color: #64748b;
+}
+
+@media (max-width: 540px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Dzień 5 — formularz wyszukiwania */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+
+    padding: 20px;
+    margin-bottom: 25px;
+
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 220px;
+}
+
+.filter-group label {
+    font-weight: bold;
+}
+
+.filter-group input,
+.filter-group select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.reset-link {
+    padding: 10px;
+    text-decoration: none;
+}
+
+/* Dzień 6 — zarządzanie kategoriami */
+
+.category-list {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.category-list .card {
+    padding: 20px;
+}
+
+.category-list form {
+    margin-bottom: 15px;
+}
+
+.category-list input {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.success {
+    color: #166534;
+    background: #dcfce7;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.error {
+    color: #991b1b;
+    background: #fee2e2;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+button:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+}
+
+/* Dzień 7 — przesyłanie pliku PDF */
+
+.material-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 600px;
+    padding: 24px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.material-form label {
+    font-weight: bold;
+}
+
+.material-form input,
+.material-form textarea,
+.material-form select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.material-form button {
+    align-self: flex-start;
+}
+
+.success {
+    color: #166534;
+    background: #dcfce7;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.error {
+    color: #991b1b;
+    background: #fee2e2;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.download-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.download-button:hover {
+    background: #1d4ed8;
+}
+
+/* Dzień 10 — rejestr pobrań */
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.downloads-table th,
+.downloads-table td {
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    text-align: left;
+}
+
+.downloads-table th {
+    background: #e2e8f0;
+    font-weight: bold;
+}
+
+.downloads-table tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.downloads-table small {
+    display: block;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+/* Dzień 12 — filtrowanie rejestru */
+
+.download-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-end;
+
+    padding: 20px;
+    margin-bottom: 24px;
+
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.download-filters > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 200px;
+}
+
+.download-filters label {
+    font-weight: bold;
+}
+
+.download-filters select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.download-filters button {
+    align-self: flex-start;
+}
+
+.download-filters a {
+    padding: 10px 0;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.downloads-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.downloads-table th,
+.downloads-table td {
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.downloads-table th {
+    background: #e2e8f0;
+}
+
+.downloads-table small {
+    display: block;
+    color: #64748b;
+}
+
+/* Dzień 14 — komunikaty walidacji formularza */
+
+.just-validate-error-label {
+    color: #b91c1c;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.just-validate-error-field {
+    border: 2px solid #dc2626 !important;
+    background-color: #fff7f7;
+}
+
+.material-form input:focus,
+.material-form textarea:focus,
+.material-form select:focus {
+    outline-offset: 2px;
+}
